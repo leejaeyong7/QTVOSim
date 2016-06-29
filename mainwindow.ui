@@ -6,20 +6,20 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>460</height>
+    <width>1150</width>
+    <height>458</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QOpenGLWidget" name="openGLWidget">
+   <widget class="QWidget" name="irrlichtContainer" native="true">
     <property name="geometry">
      <rect>
-      <x>9</x>
+      <x>10</x>
       <y>0</y>
-      <width>591</width>
+      <width>600</width>
       <height>400</height>
      </rect>
     </property>
@@ -27,31 +27,89 @@
    <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>610</x>
-      <y>2</y>
-      <width>381</width>
-      <height>124</height>
+      <x>620</x>
+      <y>0</y>
+      <width>521</width>
+      <height>401</height>
      </rect>
     </property>
-    <layout class="QVBoxLayout" name="verticalLayout_3">
+    <layout class="QVBoxLayout" name="verticalLayout_7">
      <item>
-      <layout class="QVBoxLayout" name="mainCameraSelector">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
        <item>
-        <widget class="QLabel" name="label">
-         <property name="text">
-          <string>Choose Main Camera</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <layout class="QHBoxLayout" name="horizontalLayout_2">
+        <layout class="QVBoxLayout" name="mainCameraSelector">
          <item>
-          <widget class="QComboBox" name="mainCameraComboBox"/>
+          <widget class="QLabel" name="label">
+           <property name="text">
+            <string>Choose Main Camera</string>
+           </property>
+          </widget>
          </item>
          <item>
-          <widget class="QToolButton" name="mainCameraSettingsButton">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QComboBox" name="mainCameraComboBox"/>
+           </item>
+           <item>
+            <widget class="QToolButton" name="mainCameraSettingsButton">
+             <property name="text">
+              <string>...</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout">
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="frameShape">
+              <enum>QFrame::NoFrame</enum>
+             </property>
+             <property name="text">
+              <string>Zoom</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+             <property name="textInteractionFlags">
+              <set>Qt::NoTextInteraction</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QSlider" name="mainCameraZoomSlider">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mainRecordButton">
            <property name="text">
-            <string>...</string>
+            <string>Record</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="mainCaptureButton">
+           <property name="text">
+            <string>Capture</string>
            </property>
           </widget>
          </item>
@@ -60,473 +118,443 @@
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
-        <layout class="QVBoxLayout" name="verticalLayout">
-         <item>
-          <widget class="QLabel" name="label_2">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="frameShape">
-            <enum>QFrame::NoFrame</enum>
-           </property>
-           <property name="text">
-            <string>Zoom</string>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignCenter</set>
-           </property>
-           <property name="textInteractionFlags">
-            <set>Qt::NoTextInteraction</set>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QSlider" name="mainCameraZoomSlider">
-           <property name="orientation">
-            <enum>Qt::Horizontal</enum>
-           </property>
-          </widget>
-         </item>
-        </layout>
-       </item>
-       <item>
-        <widget class="QPushButton" name="mainRecordButton">
+        <widget class="QLabel" name="label_3">
          <property name="text">
-          <string>Record</string>
+          <string>Camera Modes</string>
          </property>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="mainCaptureButton">
-         <property name="text">
-          <string>Capture</string>
+        <widget class="QTabWidget" name="tabWidget">
+         <property name="currentIndex">
+          <number>0</number>
          </property>
+         <widget class="QWidget" name="freeCameraModeTab">
+          <attribute name="title">
+           <string>Free</string>
+          </attribute>
+          <widget class="QWidget" name="">
+           <property name="geometry">
+            <rect>
+             <x>1</x>
+             <y>1</y>
+             <width>511</width>
+             <height>204</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_4">
+            <item>
+             <layout class="QGridLayout" name="gridLayout_2">
+              <item row="0" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_3">
+                <item>
+                 <widget class="QLabel" name="label_10">
+                  <property name="text">
+                   <string>X:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
+                  <property name="maximum">
+                   <double>9999.989999999999782</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_4">
+                <item>
+                 <widget class="QLabel" name="label_11">
+                  <property name="text">
+                   <string>Y:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
+                  <property name="maximum">
+                   <double>9999.989999999999782</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="0" column="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_5">
+                <item>
+                 <widget class="QLabel" name="label_12">
+                  <property name="text">
+                   <string>Z:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
+                  <property name="maximum">
+                   <double>9999.989999999999782</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="0">
+               <layout class="QHBoxLayout" name="horizontalLayout_8">
+                <item>
+                 <widget class="QLabel" name="label_13">
+                  <property name="text">
+                   <string>θ:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
+                  <property name="decimals">
+                   <number>3</number>
+                  </property>
+                  <property name="maximum">
+                   <double>360.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="1">
+               <layout class="QHBoxLayout" name="horizontalLayout_9">
+                <item>
+                 <widget class="QLabel" name="label_14">
+                  <property name="text">
+                   <string>ϕ:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
+                  <property name="decimals">
+                   <number>3</number>
+                  </property>
+                  <property name="maximum">
+                   <double>360.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item row="1" column="2">
+               <layout class="QHBoxLayout" name="horizontalLayout_10">
+                <item>
+                 <widget class="QLabel" name="label_15">
+                  <property name="text">
+                   <string>Ψ:</string>
+                  </property>
+                  <property name="alignment">
+                   <set>Qt::AlignCenter</set>
+                  </property>
+                 </widget>
+                </item>
+                <item>
+                 <widget class="QDoubleSpinBox" name="doubleSpinBox_8">
+                  <property name="decimals">
+                   <number>3</number>
+                  </property>
+                  <property name="maximum">
+                   <double>360.000000000000000</double>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="gridLayout">
+              <item row="0" column="0">
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Velocity</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="0" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
+              </item>
+              <item row="0" column="2">
+               <widget class="QLabel" name="label_5">
+                <property name="text">
+                 <string>m/s</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="0">
+               <widget class="QLabel" name="label_6">
+                <property name="text">
+                 <string>Acceleration</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
+              </item>
+              <item row="1" column="2">
+               <widget class="QLabel" name="label_7">
+                <property name="text">
+                 <string>m/s^2</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="0">
+               <widget class="QLabel" name="label_9">
+                <property name="text">
+                 <string>Angular Velocity</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+              <item row="2" column="1">
+               <widget class="QDoubleSpinBox" name="doubleSpinBox_9"/>
+              </item>
+              <item row="2" column="2">
+               <widget class="QLabel" name="label_8">
+                <property name="text">
+                 <string>deg/s</string>
+                </property>
+                <property name="alignment">
+                 <set>Qt::AlignCenter</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="editCameraMode">
+          <attribute name="title">
+           <string>Edit</string>
+          </attribute>
+          <widget class="QWidget" name="">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>1</y>
+             <width>501</width>
+             <height>201</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_8">
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_5">
+              <item>
+               <widget class="QLabel" name="label_16">
+                <property name="text">
+                 <string>Choose Environment to Add</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QHBoxLayout" name="horizontalLayout_6">
+                <item>
+                 <widget class="QComboBox" name="comboBox"/>
+                </item>
+                <item>
+                 <widget class="QToolButton" name="toolButton">
+                  <property name="text">
+                   <string>...</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QVBoxLayout" name="verticalLayout_6">
+              <item>
+               <widget class="QLabel" name="label_23">
+                <property name="text">
+                 <string>Manipulate Camera Position/Rotations</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <layout class="QGridLayout" name="gridLayout_3">
+                <item row="0" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_7">
+                  <item>
+                   <widget class="QLabel" name="label_17">
+                    <property name="text">
+                     <string>X:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_10">
+                    <property name="maximum">
+                     <double>9999.989999999999782</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="0" column="1">
+                 <layout class="QHBoxLayout" name="horizontalLayout_11">
+                  <item>
+                   <widget class="QLabel" name="label_18">
+                    <property name="text">
+                     <string>Y:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_11">
+                    <property name="maximum">
+                     <double>9999.989999999999782</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="0" column="2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_12">
+                  <item>
+                   <widget class="QLabel" name="label_19">
+                    <property name="text">
+                     <string>Z:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_12">
+                    <property name="maximum">
+                     <double>9999.989999999999782</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="0">
+                 <layout class="QHBoxLayout" name="horizontalLayout_13">
+                  <item>
+                   <widget class="QLabel" name="label_20">
+                    <property name="text">
+                     <string>θ:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_13">
+                    <property name="decimals">
+                     <number>3</number>
+                    </property>
+                    <property name="maximum">
+                     <double>360.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="1">
+                 <layout class="QHBoxLayout" name="horizontalLayout_14">
+                  <item>
+                   <widget class="QLabel" name="label_21">
+                    <property name="text">
+                     <string>ϕ:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_14">
+                    <property name="decimals">
+                     <number>3</number>
+                    </property>
+                    <property name="maximum">
+                     <double>360.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+                <item row="1" column="2">
+                 <layout class="QHBoxLayout" name="horizontalLayout_15">
+                  <item>
+                   <widget class="QLabel" name="label_22">
+                    <property name="text">
+                     <string>Ψ:</string>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignCenter</set>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QDoubleSpinBox" name="doubleSpinBox_15">
+                    <property name="decimals">
+                     <number>3</number>
+                    </property>
+                    <property name="maximum">
+                     <double>360.000000000000000</double>
+                    </property>
+                   </widget>
+                  </item>
+                 </layout>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+         </widget>
         </widget>
        </item>
       </layout>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="">
-    <property name="geometry">
-     <rect>
-      <x>610</x>
-      <y>140</y>
-      <width>381</width>
-      <height>261</height>
-     </rect>
-    </property>
-    <layout class="QVBoxLayout" name="verticalLayout_2">
-     <item>
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>Camera Modes</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QTabWidget" name="tabWidget">
-       <property name="currentIndex">
-        <number>1</number>
-       </property>
-       <widget class="QWidget" name="freeCameraModeTab">
-        <attribute name="title">
-         <string>Free</string>
-        </attribute>
-        <widget class="QWidget" name="">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>371</width>
-           <height>204</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_4">
-          <item>
-           <layout class="QGridLayout" name="gridLayout_2">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
-              <item>
-               <widget class="QLabel" name="label_10">
-                <property name="text">
-                 <string>X:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_3">
-                <property name="maximum">
-                 <double>9999.989999999999782</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_4">
-              <item>
-               <widget class="QLabel" name="label_11">
-                <property name="text">
-                 <string>Y:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_4">
-                <property name="maximum">
-                 <double>9999.989999999999782</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="2">
-             <layout class="QHBoxLayout" name="horizontalLayout_5">
-              <item>
-               <widget class="QLabel" name="label_12">
-                <property name="text">
-                 <string>Z:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_5">
-                <property name="maximum">
-                 <double>9999.989999999999782</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_8">
-              <item>
-               <widget class="QLabel" name="label_13">
-                <property name="text">
-                 <string>θ:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_6">
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>360.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_9">
-              <item>
-               <widget class="QLabel" name="label_14">
-                <property name="text">
-                 <string>ϕ:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_7">
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>360.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="2">
-             <layout class="QHBoxLayout" name="horizontalLayout_10">
-              <item>
-               <widget class="QLabel" name="label_15">
-                <property name="text">
-                 <string>Ψ:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_8">
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>360.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout">
-            <item row="0" column="0">
-             <widget class="QLabel" name="label_4">
-              <property name="text">
-               <string>Velocity</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox"/>
-            </item>
-            <item row="0" column="2">
-             <widget class="QLabel" name="label_5">
-              <property name="text">
-               <string>m/s</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0">
-             <widget class="QLabel" name="label_6">
-              <property name="text">
-               <string>Acceleration</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_2"/>
-            </item>
-            <item row="1" column="2">
-             <widget class="QLabel" name="label_7">
-              <property name="text">
-               <string>m/s^2</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0">
-             <widget class="QLabel" name="label_9">
-              <property name="text">
-               <string>Angular Velocity</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="1">
-             <widget class="QDoubleSpinBox" name="doubleSpinBox_9"/>
-            </item>
-            <item row="2" column="2">
-             <widget class="QLabel" name="label_8">
-              <property name="text">
-               <string>deg/s</string>
-              </property>
-              <property name="alignment">
-               <set>Qt::AlignCenter</set>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-       <widget class="QWidget" name="editCameraMode">
-        <attribute name="title">
-         <string>Edit</string>
-        </attribute>
-        <widget class="QWidget" name="">
-         <property name="geometry">
-          <rect>
-           <x>1</x>
-           <y>1</y>
-           <width>371</width>
-           <height>66</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_5">
-          <item>
-           <widget class="QLabel" name="label_16">
-            <property name="text">
-             <string>Choose Environment to Add</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QHBoxLayout" name="horizontalLayout_6">
-            <item>
-             <widget class="QComboBox" name="comboBox"/>
-            </item>
-            <item>
-             <widget class="QToolButton" name="toolButton">
-              <property name="text">
-               <string>...</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-        <widget class="QWidget" name="">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>80</y>
-           <width>371</width>
-           <height>111</height>
-          </rect>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_6">
-          <item>
-           <widget class="QLabel" name="label_23">
-            <property name="text">
-             <string>Manipulate Camera Position/Rotations</string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <layout class="QGridLayout" name="gridLayout_3">
-            <item row="0" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_7">
-              <item>
-               <widget class="QLabel" name="label_17">
-                <property name="text">
-                 <string>X:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_10">
-                <property name="maximum">
-                 <double>9999.989999999999782</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_11">
-              <item>
-               <widget class="QLabel" name="label_18">
-                <property name="text">
-                 <string>Y:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_11">
-                <property name="maximum">
-                 <double>9999.989999999999782</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="0" column="2">
-             <layout class="QHBoxLayout" name="horizontalLayout_12">
-              <item>
-               <widget class="QLabel" name="label_19">
-                <property name="text">
-                 <string>Z:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_12">
-                <property name="maximum">
-                 <double>9999.989999999999782</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="0">
-             <layout class="QHBoxLayout" name="horizontalLayout_13">
-              <item>
-               <widget class="QLabel" name="label_20">
-                <property name="text">
-                 <string>θ:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_13">
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>360.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="1">
-             <layout class="QHBoxLayout" name="horizontalLayout_14">
-              <item>
-               <widget class="QLabel" name="label_21">
-                <property name="text">
-                 <string>ϕ:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_14">
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>360.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-            <item row="1" column="2">
-             <layout class="QHBoxLayout" name="horizontalLayout_15">
-              <item>
-               <widget class="QLabel" name="label_22">
-                <property name="text">
-                 <string>Ψ:</string>
-                </property>
-               </widget>
-              </item>
-              <item>
-               <widget class="QDoubleSpinBox" name="doubleSpinBox_15">
-                <property name="decimals">
-                 <number>3</number>
-                </property>
-                <property name="maximum">
-                 <double>360.000000000000000</double>
-                </property>
-               </widget>
-              </item>
-             </layout>
-            </item>
-           </layout>
-          </item>
-         </layout>
-        </widget>
-       </widget>
-      </widget>
      </item>
     </layout>
    </widget>
@@ -536,7 +564,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1000</width>
+     <width>1150</width>
      <height>32</height>
     </rect>
    </property>
@@ -545,9 +573,9 @@
      <string>E&amp;ngine</string>
     </property>
     <addaction name="actionShow_Features"/>
-    <addaction name="actionExit"/>
     <addaction name="actionImport"/>
     <addaction name="actionExport"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuEntity">
     <property name="title">

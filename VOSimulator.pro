@@ -10,11 +10,21 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = VOSimulator
 TEMPLATE = app
-
+LIBS += -lIrrlicht
+INCLUDEPATH += /usr/include/irrlicht/
 
 SOURCES += main.cpp\
-        mainwindow.cpp
+        mainwindow.cpp \
+        qirrlichtwidget.cpp \
+    Engine/simEngine.cpp \
+    Engine/Entity/simEntity.cpp \
+    Engine/Physics/simPhysics.cpp
 
-HEADERS  += mainwindow.h
+HEADERS  += mainwindow.h \
+        qirrlichtwidget.h \
+    Engine/simEngine.h \
+    Engine/Entity/simEntity.h \
+    Engine/Physics/simPhysics.h \
+    Engine/Entity/simEntityOption.h
 
 FORMS    += mainwindow.ui
