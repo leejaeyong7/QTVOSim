@@ -16,15 +16,22 @@
 //----------------------------------------------------------------------------//
 //                                DEFINITIONS                                 //
 //----------------------------------------------------------------------------//
-
 /**
- * Default Constructor
- * Initialize Robot with default parameters
+ * @brief Constructor with position/rotation
+ * @param _name - name of entity
+ * @param x  x axis coordinate
+ * @param y  y axis coordinate
+ * @param z  z axis coordinate
+ * @param a  roll
+ * @param b  pitch
+ * @param c  yaw
+ * @param parent parent entity
+ * @return SimRobot object
  */
 SimRobot::SimRobot(string _name,
                    double x, double y, double z,
-                   double a, double b, double c)
-    :SimEntity(_name,x,y,z,a,b,c)
+                   double a, double b, double c, SimEntity* parent)
+    :SimEntity(_name,x,y,z,a,b,c,parent)
 {
 
 }
@@ -38,8 +45,7 @@ SimRobot::~SimRobot()
     vector<SimSensor*>::iterator it;
     for(it = sensorVector.begin() ; it < sensorVector.end(); ++it)
     {
-        removeSensor(*it);
-        (*it)->removeAttachedRobot();
+        (*it)->setParent(0);
     }
 }
 /**
@@ -49,8 +55,10 @@ SimRobot::~SimRobot()
  */
 void SimRobot::addSensor(SimSensor* obj)
 {
+    if(!obj)
+        return;
     sensorVector.push_back(obj);
-    obj->addAttachedRobot(this);
+    obj->setParent(this);
 }
 
 /**
@@ -62,14 +70,12 @@ void SimRobot::removeSensor(SimSensor* obj)
 {
     if(!obj)
         return;
-    if(obj->getAttachedRobot()!= this)
+    if(obj->getParent() != this)
         return;
     sensorVector.erase(
         std::remove(sensorVector.begin(),
                     sensorVector.end(),
                     obj),
         sensorVector.end());
-
-    obj->removeAttachedRobot();
+    obj->setParent(0);
 }
-

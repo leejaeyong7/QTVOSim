@@ -10,22 +10,87 @@
 //                                  Includes
 //----------------------------------------------------------------------------//
 #include "simEntity.h"
+// helper functions
+double radToDeg(double rad)
+{
+    return rad*180.0/PI;
+}
+
+double degToRad(double deg)
+{
+    return deg*PI/180.0;
+}
+
+array<double,9> eul2mat(array<double,3> rot)
+{
+    array<double,9> rotmat;
+
+    double a = degToRad(rot[0]);
+    double b = degToRad(rot[1]);
+    double c = degToRad(rot[2]);
+
+    rotmat[0] = cos(b)*cos(c);
+    rotmat[1] = sin(a)*sin(b)*cos(c) + cos(a)*sin(c);
+    rotmat[2] = -1*cos(a)*sin(b)*cos(c) + sin(a)*sin(c);
+
+    rotmat[3] = -1*cos(b)*cos(c);
+    rotmat[4] = -1*sin(a)*sin(b)*sin(c) + cos(a)*cos(c);
+    rotmat[5] = cos(a)*sin(b)*sin(c) + sin(a)*cos(c);
+
+    rotmat[6] = sin(b);
+    rotmat[7] = -1*sin(a)*cos(b);
+    rotmat[8] = cos(a)*cos(b);
+    return rotmat;
+}
+array<double,3> add(Point3D p1,Point3D p2)
+{
+    array<double,3> ret;
+    ret[0] = p1[0] + p2[0];
+    ret[1] = p1[1] + p2[1];
+    ret[2] = p1[2] + p2[2];
+    return ret;
+}
+
+array<double,3> rotate(Point3D p, array<double,3> rot)
+{
+    array<double,9> rotmat = eul2mat(rot);
+    array<double,3> rotated;
+    rotated[0] = rotmat[0]*p[0] + rotmat[1]*p[1]+rotmat[2]*p[2];
+    rotated[1] = rotmat[3]*p[0] + rotmat[4]*p[1]+rotmat[5]*p[2];
+    rotated[2] = rotmat[6]*p[0] + rotmat[7]*p[1]+rotmat[8]*p[2];
+    return rotated;
+}
+
 //----------------------------------------------------------------------------//
 //                               Class Definitions
 //----------------------------------------------------------------------------//
+/**
+ * @brief Constructor with position/rotation
+ * @param _name - name of entity
+ * @param x  x axis coordinate
+ * @param y  y axis coordinate
+ * @param z  z axis coordinate
+ * @param a  roll
+ * @param b  pitch
+ * @param c  yaw
+ * @param parent parent entity
+ * @return SimEntity object
+ */
 SimEntity::SimEntity(string _name,
                      double x, double y, double z,
-                     double a, double b, double c)
+                     double a, double b, double c, SimEntity *parent)
 {
-    translation.X = x;
-    translation.Y = y;
-    translation.Z = z;
-
-    rotation.Roll = a;
-    rotation.Pitch = b;
-    rotation.Yaw = c;
-
-    name = _name;
+    setName(_name);
+    setParent(parent);
+    array<double,3> pos;
+    pos[0] = x;
+    pos[1] = y;
+    pos[2] = z;
+    array<double,3> rot;
+    rot[0] = a;
+    rot[1] = b;
+    rot[2] = c;
+    physics = new SimPhysics(pos,rot);
 }
 
 
@@ -36,9 +101,14 @@ SimEntity::SimEntity(string _name,
  */
 SimEntity::SimEntity(const SimEntity & obj)
 {
-    this->translation = obj.getPosition();
-    this->rotation = obj.getRotation();
-    this->name = obj.getName();
+    setName(obj.getName());
+    setParent(obj.getParent());
+    physics = new SimPhysics(*(obj.getPhysics()));
+    advancedOption = *(obj.getAdvancedOption());
+    points = *(obj.getPoints());
+    triangles = *(obj.getTriangles());
+    rectangles = *(obj.getRectangles());
+    spheres = *(obj.getSpheres());
 }
 
 /**
@@ -48,54 +118,140 @@ SimEntity::SimEntity(const SimEntity & obj)
  */
 SimEntity& SimEntity::operator= (const SimEntity & rhs)
 {
-    translation = rhs.getPosition();
-    rotation = rhs.getRotation();
     name = rhs.getName();
+    parent = rhs.getParent();
+    this->physics = new SimPhysics(*(rhs.getPhysics()));
+    advancedOption = *(rhs.getAdvancedOption());
+    points = *(rhs.getPoints());
+    triangles = *(rhs.getTriangles());
+    rectangles = *(rhs.getRectangles());
+    spheres = *(rhs.getSpheres());
     return *this;
 }
 
 SimEntity::~SimEntity()
 {
-    vector<AdvancedOption*>* av = getAdvancedOption();
+    vector<AdvancedOption*>* av = &advancedOption;
     vector<AdvancedOption*>::iterator it;
     for(it = av->begin(); it != av->end(); it++)
     {
         delete (*it);
     }
+    delete physics;
 }
 
+
 /**
- * sets position of entity
- * @param double x - x axis coordinate
- * @param double y - y axis coordinate
- * @param double z - z axis coordinate
- * @return none
+ * @brief sets parent entity. Used to calculate position of this entity
+ * @param parent entity object ptr
+ */
+void SimEntity::setParent(SimEntity* parent)
+{
+    this->parent = parent;
+}
+
+
+/**
+ * @brief Sets position of entity relative to parent(if exists)
+ * @param x axis coord
+ * @param y axis coord
+ * @param z axis coord
  */
 void SimEntity::setPosition(double x, double y, double z)
 {
-    translation.X = x;
-    translation.Y = y;
-    translation.Z = z;
+    physics->setPosition(x,y,z);
 }
+
+
+
 /**
- * sets rotation of entity
- * @param double a - a axis coordinate
- * @param double b - b axis coordinate
- * @param double c - c axis coordinate
- * @return none
+ * @brief setPosition
+ * @param p position to set
+ */
+void SimEntity::setPosition(Point3D p)
+{
+    physics->setPosition(p);
+}
+
+
+/**
+ * @brief Sets rotation of entity
+ * @param a roll
+ * @param b pitch
+ * @param c yaw
  */
 void SimEntity::setRotation(double a, double b, double c)
 {
-    rotation.Roll = a;
-    rotation.Pitch = b;
-    rotation.Yaw = c;
+    physics->setRotation(a,b,c);
 }
 
 /**
- * sets name of entity
- * @return none
+ * @brief setRotation
+ * @param p position to set
  */
-void SimEntity::setName(string new_name)
+void SimEntity::setRotation(array<double,3> p)
+{
+    physics->setRotation(p);
+}
+
+/**
+ * @brief Sets name of entity
+ * @param new_name name of entity to set
+ */
+void SimEntity::setName(std::string new_name)
 {
     name = new_name;
+}
+
+/**
+ * @brief get absolute position
+ * @return position using Forward kinematics
+ */
+const Point3D SimEntity::getAbsolutePosition() const
+{
+    if(parent)
+    {
+        return add(parent->getAbsolutePosition(),
+                   rotate(getPosition(),parent->getRotation()));
+    }
+    else
+    {
+        return getPosition();
+    }
+}
+
+/**
+ * @brief add Points
+ * @param p array of 3 doubles
+ */
+void SimEntity::addPoints(Point3D p)
+{
+    points.push_back(p);
+}
+
+/**
+ * @brief adds triangle to entity
+ * @param t array of 3 arrays of 3 doubles
+ */
+void SimEntity::addTriangle(Triangle t)
+{
+    triangles.push_back(t);
+}
+
+/**
+ * @brief add Rectangles
+ * @param r array of 4 arrays of 3 doubles
+ */
+void SimEntity::addRectangle(Rectangle r)
+{
+    rectangles.push_back(r);
+}
+
+/**
+ * @brief add Spheres
+ * @param s Sphere struct
+ */
+void SimEntity::addSphere(Sphere s)
+{
+    spheres.push_back(s);
 }

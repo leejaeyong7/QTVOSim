@@ -19,7 +19,6 @@
 #include <iostream>
 #include <algorithm>
 #include <string>
-#include "Physics/simPhysics.h"
 #include "Entity/simEntity.h"
 //----------------------------------------------------------------------------//
 //                                  Namespaces
@@ -31,7 +30,6 @@ using namespace std;
 //----------------------------------------------------------------------------//
 //                               Class Declaration
 //----------------------------------------------------------------------------//
-class SimGUI;
 class SimEngine
 {
 public:

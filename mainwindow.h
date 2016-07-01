@@ -2,7 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include "qirrlichtwidget.h"
+#include <glwidget.h>
 
 namespace Ui {
 class MainWindow;
@@ -15,16 +15,12 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
-    QIrrlichtWidget * getIrrlichtWidget()
-    {
-        return irrlichtWidget;
-    };
 private slots:
     void on_actionExit_triggered();
 
 private:
     Ui::MainWindow *ui;
-    QIrrlichtWidget *irrlichtWidget;
+    GLWidget * glwidget;
 };
 
 #endif // MAINWINDOW_H

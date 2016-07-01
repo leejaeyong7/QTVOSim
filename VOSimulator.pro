@@ -4,37 +4,29 @@
 #
 #-------------------------------------------------
 
-QT       += core gui
+QT       += core gui opengl widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = VOSimulator
 TEMPLATE = app
-LIBS += -lIrrlicht
-INCLUDEPATH += /usr/include/irrlicht/
 
 SOURCES += main.cpp\
         mainwindow.cpp \
-        qirrlichtwidget.cpp \
     Engine/simEngine.cpp \
     Engine/Entity/simEntity.cpp \
-    Engine/Physics/simPhysics.cpp \
-    Engine/Entity/Sensor/simCamera.cpp \
     Engine/Entity/Robot/simRobot.cpp \
-    Engine/Entity/Environment/simEnvironment.cpp \
-    Engine/Entity/Sensor/simSensor.cpp \
-    Engine/Entity/Environment/simPlane.cpp
+    glwidget.cpp \
+    Engine/Entity/Physics/simPhysics.cpp \
+    Engine/Entity/Sensor/simSensor.cpp
 
 HEADERS  += mainwindow.h \
-        qirrlichtwidget.h \
     Engine/simEngine.h \
     Engine/Entity/simEntity.h \
-    Engine/Physics/simPhysics.h \
     Engine/Entity/simEntityOption.h \
-    Engine/Entity/Sensor/simCamera.h \
     Engine/Entity/Robot/simRobot.h \
-    Engine/Entity/Environment/simEnvironment.h \
-    Engine/Entity/Sensor/simSensor.h \
-    Engine/Entity/Environment/simPlane.h
+    glwidget.h \
+    Engine/Entity/Physics/simPhysics.h \
+    Engine/Entity/Sensor/simSensor.h
 
 FORMS    += mainwindow.ui

@@ -16,7 +16,7 @@
 
 SimEngine::SimEngine()
 {
-    simPhysics = new SimPhysics();
+
 }
 
 void SimEngine::addEntity(SimEntity * obj)

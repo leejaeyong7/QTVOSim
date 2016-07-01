@@ -1,14 +1,15 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-#include <iostream>
 using namespace std;
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    irrlichtWidget = new QIrrlichtWidget(ui->irrlichtContainer);
-    irrlichtWidget->init();
+    QGridLayout * glLayout = new QGridLayout();
+    glwidget = new GLWidget(ui->openGLWidgetFrame);
+    glLayout->addWidget(glwidget);
+    ui->openGLWidgetFrame->setLayout(glLayout);
 }
 
 MainWindow::~MainWindow()

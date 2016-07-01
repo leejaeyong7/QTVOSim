@@ -1,11 +1,3 @@
-/*============================================================================
- * @author: Jae Yong Lee
- * @file: simEntity.h
- * @version:
- * @summary:
- *      Declaration file for simulation objects
- *
- *============================================================================*/
 #ifndef _SIM_ENTITY_H_
 #define _SIM_ENTITY_H_
 //----------------------------------------------------------------------------//
@@ -13,7 +5,7 @@
 //----------------------------------------------------------------------------//
 #include <string>
 #include <vector>
-#include <cmath>
+#include "Physics/simPhysics.h"
 #include "simEntityOption.h"
 //----------------------------------------------------------------------------//
 //                                END INCLUDES                                //
@@ -26,60 +18,16 @@ using namespace std;
 //                               END NAMESPACES                               //
 //----------------------------------------------------------------------------//
 //----------------------------------------------------------------------------//
-//                            TYPEDEF DEFINITIONS                             //
-//----------------------------------------------------------------------------//
-typedef struct Position{
-    double X;
-    double Y;
-    double Z;
-} Position;
-
-typedef struct Rotation{
-    double Roll;
-    double Pitch;
-    double Yaw;
-} Rotation;
-
-typedef struct Point{
-    double x;
-    double y;
-    double z;
-} Point;
-
-typedef struct Triangle{
-    Point a;
-    Point b;
-    Point c;
-} Triangle;
-
-typedef struct Rectangle{
-    Triangle u;
-    Triangle d;
-} Rectangle;
-//----------------------------------------------------------------------------//
-//                          END TYPEDEF DEFINITIONS                           //
-//----------------------------------------------------------------------------//
-//----------------------------------------------------------------------------//
 //                              CLASS DEFINITION                              //
 //----------------------------------------------------------------------------//
 class SimEntity
 {
 public:
-
-    /**
-     * Constructor with position/rotation and empty scenenode
-     * @param std::stringw p_name - name of entity
-     * @param double x - x axis coordinate
-     * @param double y - y axis coordinate
-     * @param double z - z axis coordinate
-     * @param double a - a axis coordinate
-     * @param double b - b axis coordinate
-     * @param double c - c axis coordinate
-     * @return SimEntity object with no mesh to render
-     */
+    /* default constructor */
     SimEntity(std::string _name,
               double x, double y, double z,
-              double a, double b, double c);
+              double a, double b, double c,
+              SimEntity * parent = 0);
 
     /* copy constructor */
     SimEntity(const SimEntity & obj);
@@ -87,103 +35,88 @@ public:
     /* assignment operator */
     SimEntity& operator= (const SimEntity & rhs);
 
-    /* default desructor. needs overloading */
+    /* default desructor */
     ~SimEntity();
 
-//----------------------------------------------------------------------------//
-//                                  SETTERS                                   //
-//----------------------------------------------------------------------------//
+    /* sets parent entity (used for Forward Kinematics) */
+    void setParent(SimEntity* parent);
+
+    /* Sets position of entity relative to parent (if exists) */
     void setPosition(double x, double y, double z);
 
+    /* Sets position of entity using array of 3 doubles */
+    void setPosition(Point3D p);
+
+    /* Sets rotation of entity */
     void setRotation(double a, double b, double c);
 
+    /* setRotation */
+    void setRotation(array<double,3> p);
+
+    /* Sets name of entity */
     void setName(std::string new_name);
 
-//----------------------------------------------------------------------------//
-//                                  GETTERS                                   //
-//----------------------------------------------------------------------------//
-    /**
-     * gets position of entity
-     * @param none
-     * @return array size of 3 of double representing positional vector
-     */
-    const Position getPosition() const {return translation;};
+    // Getters
+    /* Gets Parent entity ptr */
+    SimEntity* getParent() const {return parent;}
 
-    /**
-     * gets position of entity
-     * @param none
-     * @return vector size of 3 of double representing rotational matrix
-     */
-    const Rotation getRotation() const {return rotation;};
+    /* Gets physical property object */
+    SimPhysics* getPhysics() const{return physics;}
 
-    /**
-     * gets name of this entity
-     */
-    const std::string getName() const {return name;};
+    /* Gets position of entity relative to parent */
+    const Point3D getPosition() const {return physics->getPosition();}
 
-    /**
-     * gets advanced option pointer
-     */
-    vector<AdvancedOption*>* getAdvancedOption() {return &advancedOption;};
+    /* Get relative position to parent */
+    const Point3D getAbsolutePosition() const;
 
-    /**
-     * gets keypoint vector pointer
-     */
-    vector<Point>* getKeyPoints() {return &keyPoints;};
+    /* Gets Rotation of entity */
+    const array<double,3> getRotation() const {return physics->getRotation();}
 
-    /**
-     * gets Point vector pointer
-     */
-    vector<Point>* getPoints() {return &points;};
+    /* gets name of this entity */
+    const std::string getName() const {return name;}
 
-    /**
-     * gets Triangle vector pointer
-     */
-    vector<Triangle>* getTriangles() {return &triangles;};
+    /* gets advanced option pointer */
+    const vector<AdvancedOption*>* getAdvancedOption() const {return &advancedOption;}
 
-    /**
-     * gets Rectangle vector pointer
-     */
-    vector<Rectangle>* getRectangles() {return &rectangles;};
-//----------------------------------------------------------------------------//
-//                                 CALLBACKS                                  //
-//----------------------------------------------------------------------------//
-    /**
-     * callback called when edit is done
-     */
-    /* virtual void editCallback() = 0; */
-    virtual void update() = 0;
+    /* gets Point vector pointer */
+    const vector<Point3D>* getPoints() const {return &points;}
 
-    /**
-     * Callback function when removeEntity is called
-     * This is pure virtual function that must be overwritten
-     */
-    /* virtual void removeCallback() = 0; */
+    /* gets Triangle vector pointer */
+    const vector<Triangle>* getTriangles() const {return &triangles;}
 
+    /* gets Rectangle vector pointer */
+    const vector<Rectangle>* getRectangles() const {return &rectangles;}
 
+    /* gets Spheres */
+    const vector<Sphere>* getSpheres() const{return &spheres;}
 
+    /* add Points */
+    void addPoints(Point3D p);
+
+    /* adds triangle to entity */
+    void addTriangle(Triangle t);
+
+    /* add Rectangles */
+    void addRectangle(Rectangle r);
+
+    /* add Spheres */
+    void addSphere(Sphere s);
 
 private:
-    // translation coordinates
-    Position translation;
+    // parent entity
+    SimEntity* parent;
 
-    // rotation coordinates
-    Rotation rotation;
+    // physical property
+    SimPhysics * physics;
 
     // name of entity
     std::string name;
 
-    // path of mesh file
-    std::string meshPath;
-
     // Advanced options vector
     vector<AdvancedOption*> advancedOption;
 
-    // Vector of keypoints for each entity
-    vector<Point> keyPoints;
-
     // Vector of Points for each entities
-    vector<Point> points;
+    vector<Point3D> points;
 
     // Vector of Triangles for each entity
     vector<Triangle> triangles;
@@ -191,15 +124,18 @@ private:
     // Vector of Rectangles for each entity
     vector<Rectangle> rectangles;
 
+    // vector of spheres for each entity
+    vector<Sphere> spheres;
+
     // check advanced option label
     struct checkLabel
     {
         checkLabel(std::string label) : str_holder(label) {}
         std::string str_holder;
         bool operator()(AdvancedOption* obj)
-            {
-                return obj->label == str_holder;
-            }
+        {
+            return obj->label == str_holder;
+        }
     };
-};
+}; //END CLASS
 #endif

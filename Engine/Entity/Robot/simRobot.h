@@ -1,7 +1,6 @@
 /*============================================================================
  * @author: Jae Yong Lee
  * @file: simRobot.h
- * @version:
  * @summary:
  *      Declaration file for simEntity Robot object
  *
@@ -36,13 +35,10 @@ public:
     /* default constructor */
     SimRobot(std::string _name,
              double x, double y, double z,
-             double a, double b, double c);
+             double a, double b, double c, SimEntity* parent = 0);
 
     /* default destructor */
     ~SimRobot();
-
-    /* update callback */
-    virtual void update()= 0;
 
     /* adds sensor to robot */
     void addSensor(SimSensor* obj);
