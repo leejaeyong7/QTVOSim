@@ -1,4 +1,19 @@
+/*============================================================================
+ * @author     : Jae Yong Lee (leejaeyong7@gmail.com)
+ * @file       : simPhysics.cpp
+ * @brief      : Entity physics definition file
+ * Copyright (c) Jae Yong Lee / UIUC Spring 2016
+ =============================================================================*/
+//----------------------------------------------------------------------------//
+//                                  INCLUDES                                  //
+//----------------------------------------------------------------------------//
 #include "simPhysics.h"
+//----------------------------------------------------------------------------//
+//                                END INCLUDES                                //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                        HELPER FUNCTION DEFINITIONS                         //
+//----------------------------------------------------------------------------//
 namespace JAE_MATH_FUNCTIONS{
 double add(double a, double b)
 {
@@ -41,6 +56,12 @@ double fitRad(double rad)
 }
 }
 using namespace JAE_MATH_FUNCTIONS;
+//----------------------------------------------------------------------------//
+//                      END HELPER FUNCTION DEFINITIONS                       //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                              CLASS DEFINITION                              //
+//----------------------------------------------------------------------------//
 /**
  * @brief default constructor for physics
  * @param position position of entity
@@ -98,6 +119,24 @@ SimPhysics& SimPhysics::operator=(const SimPhysics& rhs)
 SimPhysics::~SimPhysics()
 {
     return;
+}
+
+/**
+ * @brief updates physical properties
+ */
+void SimPhysics::update()
+{
+    auto now = system_clock::now();
+    auto now_ms = time_point_cast<milliseconds>(now);
+    auto value = now_ms.time_since_epoch();
+    time_end = (double)(value.count());
+    double ms = (time_end - time_start);
+    time_start = time_end;
+    position = tensor(add,position,map(multiply,velocity,ms));
+    velocity = tensor(add,velocity,map(multiply,acceleration,ms));
+    rotation = apply(fitDeg,(tensor(add,rotation,map(multiply,velocity,ms))));
+    angVelocity = apply(fitDeg,
+                        (tensor(add,velocity,map(multiply,acceleration,ms))));
 }
 
 /**
@@ -193,24 +232,9 @@ void SimPhysics::setAngAcceleration(array<double,3> p)
     angAcceleration = p;
 }
 
-/**
- * @brief updates physical properties
- */
-void SimPhysics::update()
-{
-    auto now = system_clock::now();
-    auto now_ms = time_point_cast<milliseconds>(now);
-    auto value = now_ms.time_since_epoch();
-    time_end = (double)(value.count());
-    double ms = (time_end - time_start);
-    time_start = time_end;
-    position = tensor(add,position,map(multiply,velocity,ms));
-    velocity = tensor(add,velocity,map(multiply,acceleration,ms));
-    rotation = apply(fitDeg,(tensor(add,rotation,map(multiply,velocity,ms))));
-    angVelocity = apply(fitDeg,(tensor(add,velocity,map(multiply,acceleration,ms))));
-}
-
-
+//----------------------------------------------------------------------------//
+//                        PRIVATE FUNCTION DEFINITION                         //
+//----------------------------------------------------------------------------//
 /**
  * @brief SimPhysics::map
  * @param orig original point
@@ -249,7 +273,9 @@ array<double,3> SimPhysics::apply(fun_1 func,array<double,3> orig)
  * @param func function that takes two variables
  * @return array with tensor operation of func
  */
-array<double,3> SimPhysics::tensor(fun_2 func,array<double,3> p1, array<double,3> p2)
+array<double,3> SimPhysics::tensor(fun_2 func,
+                                   array<double,3> p1,
+                                   array<double,3> p2)
 {
     array<double,3> ret;
     ret[0] = func(p1[0],p2[0]);
@@ -257,3 +283,6 @@ array<double,3> SimPhysics::tensor(fun_2 func,array<double,3> p1, array<double,3
     ret[2] = func(p1[2],p2[2]);
     return ret;
 }
+//----------------------------------------------------------------------------//
+//                            END CLASS DEFINITION                            //
+//----------------------------------------------------------------------------//

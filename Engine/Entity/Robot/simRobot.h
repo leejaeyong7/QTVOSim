@@ -1,10 +1,9 @@
 /*============================================================================
- * @author: Jae Yong Lee
- * @file: simRobot.h
- * @summary:
- *      Declaration file for simEntity Robot object
- *
- *============================================================================*/
+ * @author     : Jae Yong Lee (leejaeyong7@gmail.com)
+ * @file       : simRobot.h
+ * @brief      : Robot entity declaration file
+ * Copyright (c) Jae Yong Lee / UIUC Spring 2016
+ =============================================================================*/
 #ifndef _SIM_ROBOT_H_
 #define _SIM_ROBOT_H_
 //----------------------------------------------------------------------------//
@@ -25,7 +24,7 @@ using namespace std;
 //                               END NAMESPACES                               //
 //----------------------------------------------------------------------------//
 //----------------------------------------------------------------------------//
-//                               Class Declaration
+//                             CLASS DECLARATION                              //
 //----------------------------------------------------------------------------//
 /* forward declaration */
 class SimSensor;
@@ -54,7 +53,8 @@ public:
 
 private:
     vector<SimSensor*> sensorVector;
-
-
 };
+//----------------------------------------------------------------------------//
+//                           END CLASS DECLARATION                            //
+//----------------------------------------------------------------------------//
 #endif

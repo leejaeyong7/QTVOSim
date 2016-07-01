@@ -1,16 +1,19 @@
 /*============================================================================
- * @author: Jae Yong Lee
- * @file: simEntity.cpp
- * @version:
- * @summary:
- *      Definition file for entity object
- *
- *============================================================================*/
+ * @author     : Jae Yong Lee (leejaeyong7@gmail.com)
+ * @file       : simEntity.cpp
+ * @brief      : Entity definition file
+ * Copyright (c) Jae Yong Lee / UIUC Spring 2016
+ =============================================================================*/
 //----------------------------------------------------------------------------//
-//                                  Includes
+//                                  INCLUDES                                  //
 //----------------------------------------------------------------------------//
 #include "simEntity.h"
-// helper functions
+//----------------------------------------------------------------------------//
+//                                END INCLUDES                                //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                         HELPER FUNCTION DENITIONS                          //
+//----------------------------------------------------------------------------//
 double radToDeg(double rad)
 {
     return rad*180.0/PI;
@@ -60,10 +63,13 @@ array<double,3> rotate(Point3D p, array<double,3> rot)
     rotated[2] = rotmat[6]*p[0] + rotmat[7]*p[1]+rotmat[8]*p[2];
     return rotated;
 }
+//----------------------------------------------------------------------------//
+//                       END HELPER FUNCTION DENITIONS                        //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                              CLASS DEFINITION                              //
+//----------------------------------------------------------------------------//
 
-//----------------------------------------------------------------------------//
-//                               Class Definitions
-//----------------------------------------------------------------------------//
 /**
  * @brief Constructor with position/rotation
  * @param _name - name of entity
@@ -140,6 +146,13 @@ SimEntity::~SimEntity()
     delete physics;
 }
 
+/**
+ * @brief updates entity
+ */
+void SimEntity::update()
+{
+    physics->update();
+}
 
 /**
  * @brief sets parent entity. Used to calculate position of this entity
@@ -220,38 +233,7 @@ const Point3D SimEntity::getAbsolutePosition() const
     }
 }
 
-/**
- * @brief add Points
- * @param p array of 3 doubles
- */
-void SimEntity::addPoints(Point3D p)
-{
-    points.push_back(p);
-}
 
-/**
- * @brief adds triangle to entity
- * @param t array of 3 arrays of 3 doubles
- */
-void SimEntity::addTriangle(Triangle t)
-{
-    triangles.push_back(t);
-}
-
-/**
- * @brief add Rectangles
- * @param r array of 4 arrays of 3 doubles
- */
-void SimEntity::addRectangle(Rectangle r)
-{
-    rectangles.push_back(r);
-}
-
-/**
- * @brief add Spheres
- * @param s Sphere struct
- */
-void SimEntity::addSphere(Sphere s)
-{
-    spheres.push_back(s);
-}
+//----------------------------------------------------------------------------//
+//                            END CLASS DEFINITION                            //
+//----------------------------------------------------------------------------//

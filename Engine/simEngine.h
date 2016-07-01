@@ -1,19 +1,13 @@
 /*============================================================================
- * @author: Jae Yong Lee
- * @file: simEngine.h
- * @version:
- * @summary:
- *      Declaration file for simulator engine
- *
- *============================================================================*/
-//----------------------------------------------------------------------------//
-//                                INCLUDE GUARDS
-//----------------------------------------------------------------------------//
+ * @author     : Jae Yong Lee (leejaeyong7@gmail.com)
+ * @file       : simEngine.h
+ * @brief      : Simulator Engine declaration file
+ * Copyright (c) Jae Yong Lee / UIUC Spring 2016
+ =============================================================================*/
 #ifndef _SIM_ENGINE_H_
 #define _SIM_ENGINE_H_
-
 //----------------------------------------------------------------------------//
-//                                   Includes
+//                                  INCLUDES                                  //
 //----------------------------------------------------------------------------//
 #include <vector>
 #include <iostream>
@@ -21,14 +15,17 @@
 #include <string>
 #include "Entity/simEntity.h"
 //----------------------------------------------------------------------------//
-//                                  Namespaces
+//                                END INCLUDES                                //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                                NAME SPACES                                 //
 //----------------------------------------------------------------------------//
 using namespace std;
 //----------------------------------------------------------------------------//
-//                                Global Variables
+//                              END NAME SPACES                               //
 //----------------------------------------------------------------------------//
 //----------------------------------------------------------------------------//
-//                               Class Declaration
+//                             CLASS DECLARATION                              //
 //----------------------------------------------------------------------------//
 class SimEngine
 {
@@ -40,6 +37,11 @@ public:
      * @param bool - if true, setup GUI
      */
     SimEngine();
+
+    /**
+     * @brief updates engine
+     */
+    void update();
 
     /**
      * Runs Simulation with physics, environment, and 3D rendering
@@ -77,10 +79,6 @@ public:
     void removeEntity(SimEntity * obj);
 
 private:
-    // Pointer to SimPhysics object that handles all the physics works in
-    // simulation engine
-    SimPhysics * simPhysics;
-
     // vector of SimEntity object
     vector<SimEntity*> simEntityVector;
 
@@ -96,3 +94,6 @@ private:
     };
 };
 #endif
+//----------------------------------------------------------------------------//
+//                           END CLASS DECLARATION                            //
+//----------------------------------------------------------------------------//

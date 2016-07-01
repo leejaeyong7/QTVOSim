@@ -1,24 +1,31 @@
 /*============================================================================
- * @author: Jae Yong Lee
- * @file: simEngine.cpp
- * @version:
- * @summary:
- *      Definition file for simulation engine
- *
- *============================================================================*/
+ * @author     : Jae Yong Lee (leejaeyong7@gmail.com)
+ * @file       : simEngine.cpp
+ * @brief      : Simulator Engine definition file
+ * Copyright (c) Jae Yong Lee / UIUC Spring 2016
+ =============================================================================*/
 //----------------------------------------------------------------------------//
-//                                  Includes
+//                                  INCLUDES                                  //
 //----------------------------------------------------------------------------//
 #include "simEngine.h"
 //----------------------------------------------------------------------------//
-//                               Class Definitions
+//                                END INCLUDES                                //
 //----------------------------------------------------------------------------//
-
+//----------------------------------------------------------------------------//
+//                              CLASS DEFINITION                              //
+//----------------------------------------------------------------------------//
+/**
+ * @brief default constructor
+ */
 SimEngine::SimEngine()
 {
 
 }
 
+/**
+ * @brief adds entity to engine
+ * @param obj entity to add
+ */
 void SimEngine::addEntity(SimEntity * obj)
 {
     if(!obj)
@@ -28,6 +35,25 @@ void SimEngine::addEntity(SimEntity * obj)
     simEntityVector.push_back(obj);
 }
 
+/**
+ * @brief removes entity from engine
+ * @param obj entity to remove
+ */
+void SimEngine::removeEntity(SimEntity * obj)
+{
+    if(!obj)
+        return;
+    simEntityVector.erase(
+        std::remove(simEntityVector.begin(),
+                    simEntityVector.end(),
+                    obj),
+        simEntityVector.end());
+}
+
+
+/**
+ * @brief search entity by it's name
+ */
 SimEntity* SimEngine::getEntityByName(std::string name)
 {
     std::vector<SimEntity*>::iterator it;
@@ -43,18 +69,31 @@ SimEntity* SimEngine::getEntityByName(std::string name)
         return 0;
 }
 
-void SimEngine::removeEntity(SimEntity * obj)
+/**
+ * @brief updates engine and entities
+ */
+void SimEngine::update()
 {
-    if(!obj)
-        return;
-    simEntityVector.erase(
-        std::remove(simEntityVector.begin(),
-                    simEntityVector.end(),
-                    obj),
-        simEntityVector.end());
+    std::vector<SimEntity*>::iterator it;
+    for(it = simEntityVector.begin();
+        it != simEntityVector.end();
+        it++)
+    {
+        (*it)->update();
+    }
 }
 
+/**
+ * @brief runs engine in while loop
+ */
 void SimEngine::run()
 {
+    while(1)
+    {
+        update();
+    }
     return;
 }
+//----------------------------------------------------------------------------//
+//                            END CLASS DEFINITION                            //
+//----------------------------------------------------------------------------//

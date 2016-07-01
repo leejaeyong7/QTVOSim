@@ -1,3 +1,9 @@
+/*============================================================================
+ * @author     : Jae Yong Lee (leejaeyong7@gmail.com)
+ * @file       : simPhysics.h
+ * @brief      : Entity physics definition file
+ * Copyright (c) Jae Yong Lee / UIUC Spring 2016
+ =============================================================================*/
 #ifndef SIMPHYSICS_H
 #define SIMPHYSICS_H
 //----------------------------------------------------------------------------//
@@ -25,6 +31,7 @@ using namespace std::chrono;
 //----------------------------------------------------------------------------//
 typedef array<double,3> Point3D;
 typedef array<double,2> Point2D;
+typedef array<Point3D,2> Line;
 typedef array<Point3D,3> Triangle;
 typedef array<Point3D,4> Rectangle;
 typedef struct Sphere
@@ -40,9 +47,11 @@ typedef double (*fun_2)(double a,double b);
 //----------------------------------------------------------------------------//
 //                              CLASS DEFINITION                              //
 //----------------------------------------------------------------------------//
-
 class SimPhysics
 {
+//----------------------------------------------------------------------------//
+//                        PUBLIC FUNCTION DEFINITIONS                         //
+//----------------------------------------------------------------------------//
 public:
     /* default constructor */
     SimPhysics(Point3D position,
@@ -57,6 +66,11 @@ public:
     /* assignment operator */
     SimPhysics& operator= (const SimPhysics& rhs);
 
+    /* Updates position / rotation using velocity/acceleration */
+    void update();
+//----------------------------------------------------------------------------//
+//                                  SETTERS                                   //
+//----------------------------------------------------------------------------//
     /* Sets position of entity relative to parent (if exists) */
     void setPosition(double x, double y, double z);
 
@@ -93,6 +107,9 @@ public:
     /* setRotation */
     void setAngAcceleration(array<double,3> p);
 
+//----------------------------------------------------------------------------//
+//                                  GETTERS                                   //
+//----------------------------------------------------------------------------//
     /* Gets position of entity relative to parent */
     Point3D getPosition() const {return position;}
 
@@ -110,9 +127,12 @@ public:
 
     /* Gets Angular Accleration of entity */
     array<double,3> getAngAcceleration() const {return angAcceleration;}
-
-    /* Updates position / rotation using velocity/acceleration */
-    void update();
+//----------------------------------------------------------------------------//
+//                      END PUBLIC FUNCTION DEFINITIONS                       //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                       PRIVATE VARIABLE DECLARATIONS                        //
+//----------------------------------------------------------------------------//
 private:
     // maps points
     array<double,3> map(fun_2 func,array<double,3> orig, double param);
@@ -146,5 +166,11 @@ private:
 
     // time holder
     double time_end;
+//----------------------------------------------------------------------------//
+//                     END PRIVATE VARIABLE DECLARATIONS                      //
+//----------------------------------------------------------------------------//
 };
+//----------------------------------------------------------------------------//
+//                           END CLASS DECLARATION                            //
+//----------------------------------------------------------------------------//
 #endif // SIMPHYSICS_H

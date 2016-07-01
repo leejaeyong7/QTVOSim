@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     Engine/Entity/Robot/simRobot.cpp \
     glwidget.cpp \
     Engine/Entity/Physics/simPhysics.cpp \
-    Engine/Entity/Sensor/simSensor.cpp
+    Engine/Entity/Sensor/simSensor.cpp \
+    Engine/Entity/Model/simModel.cpp
 
 HEADERS  += mainwindow.h \
     Engine/simEngine.h \
@@ -27,6 +28,7 @@ HEADERS  += mainwindow.h \
     Engine/Entity/Robot/simRobot.h \
     glwidget.h \
     Engine/Entity/Physics/simPhysics.h \
-    Engine/Entity/Sensor/simSensor.h
+    Engine/Entity/Sensor/simSensor.h \
+    Engine/Entity/Model/simModel.h
 
 FORMS    += mainwindow.ui

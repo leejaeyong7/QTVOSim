@@ -1,3 +1,9 @@
+/*============================================================================
+ * @author     : Jae Yong Lee (leejaeyong7@gmail.com)
+ * @file       : simEntity.h
+ * @brief      : Entity declaration file
+ * Copyright (c) Jae Yong Lee / UIUC Spring 2016
+ =============================================================================*/
 #ifndef _SIM_ENTITY_H_
 #define _SIM_ENTITY_H_
 //----------------------------------------------------------------------------//
@@ -6,6 +12,7 @@
 #include <string>
 #include <vector>
 #include "Physics/simPhysics.h"
+#include "Model/simModel.h"
 #include "simEntityOption.h"
 //----------------------------------------------------------------------------//
 //                                END INCLUDES                                //
@@ -22,6 +29,9 @@ using namespace std;
 //----------------------------------------------------------------------------//
 class SimEntity
 {
+//----------------------------------------------------------------------------//
+//                        PUBLIC FUNCTION DECLARATIONS                        //
+//----------------------------------------------------------------------------//
 public:
     /* default constructor */
     SimEntity(std::string _name,
@@ -38,6 +48,12 @@ public:
     /* default desructor */
     ~SimEntity();
 
+    /* updates entity */
+    void update();
+
+//----------------------------------------------------------------------------//
+//                                  SETTERS                                   //
+//----------------------------------------------------------------------------//
     /* sets parent entity (used for Forward Kinematics) */
     void setParent(SimEntity* parent);
 
@@ -55,13 +71,17 @@ public:
 
     /* Sets name of entity */
     void setName(std::string new_name);
-
-    // Getters
+//----------------------------------------------------------------------------//
+//                                  GETTERS                                   //
+//----------------------------------------------------------------------------//
     /* Gets Parent entity ptr */
     SimEntity* getParent() const {return parent;}
 
     /* Gets physical property object */
     SimPhysics* getPhysics() const{return physics;}
+
+    /* Get model of entity */
+    SimModel* getModel() const{return model;}
 
     /* Gets position of entity relative to parent */
     const Point3D getPosition() const {return physics->getPosition();}
@@ -76,32 +96,18 @@ public:
     const std::string getName() const {return name;}
 
     /* gets advanced option pointer */
-    const vector<AdvancedOption*>* getAdvancedOption() const {return &advancedOption;}
+    const vector<AdvancedOption*>* getAdvancedOption() const
+        {
+            return &advancedOption;
+        }
 
-    /* gets Point vector pointer */
-    const vector<Point3D>* getPoints() const {return &points;}
 
-    /* gets Triangle vector pointer */
-    const vector<Triangle>* getTriangles() const {return &triangles;}
-
-    /* gets Rectangle vector pointer */
-    const vector<Rectangle>* getRectangles() const {return &rectangles;}
-
-    /* gets Spheres */
-    const vector<Sphere>* getSpheres() const{return &spheres;}
-
-    /* add Points */
-    void addPoints(Point3D p);
-
-    /* adds triangle to entity */
-    void addTriangle(Triangle t);
-
-    /* add Rectangles */
-    void addRectangle(Rectangle r);
-
-    /* add Spheres */
-    void addSphere(Sphere s);
-
+//----------------------------------------------------------------------------//
+//                      END PUBLIC FUNCTION DECLARATIONS                      //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
+//                          CLASS PRIVATE VARIABLES                           //
+//----------------------------------------------------------------------------//
 private:
     // parent entity
     SimEntity* parent;
@@ -109,23 +115,14 @@ private:
     // physical property
     SimPhysics * physics;
 
+    // simulator model
+    SimModel * model;
+
     // name of entity
     std::string name;
 
     // Advanced options vector
     vector<AdvancedOption*> advancedOption;
-
-    // Vector of Points for each entities
-    vector<Point3D> points;
-
-    // Vector of Triangles for each entity
-    vector<Triangle> triangles;
-
-    // Vector of Rectangles for each entity
-    vector<Rectangle> rectangles;
-
-    // vector of spheres for each entity
-    vector<Sphere> spheres;
 
     // check advanced option label
     struct checkLabel
@@ -137,5 +134,11 @@ private:
             return obj->label == str_holder;
         }
     };
+//----------------------------------------------------------------------------//
+//                        END CLASS PRIVATE VARIABLES                         //
+//----------------------------------------------------------------------------//
 }; //END CLASS
+//----------------------------------------------------------------------------//
+//                           END CLASS DECLARATION                            //
+//----------------------------------------------------------------------------//
 #endif
