@@ -18,13 +18,23 @@ SOURCES += main.cpp\
         qirrlichtwidget.cpp \
     Engine/simEngine.cpp \
     Engine/Entity/simEntity.cpp \
-    Engine/Physics/simPhysics.cpp
+    Engine/Physics/simPhysics.cpp \
+    Engine/Entity/Sensor/simCamera.cpp \
+    Engine/Entity/Robot/simRobot.cpp \
+    Engine/Entity/Environment/simEnvironment.cpp \
+    Engine/Entity/Sensor/simSensor.cpp \
+    Engine/Entity/Environment/simPlane.cpp
 
 HEADERS  += mainwindow.h \
         qirrlichtwidget.h \
     Engine/simEngine.h \
     Engine/Entity/simEntity.h \
     Engine/Physics/simPhysics.h \
-    Engine/Entity/simEntityOption.h
+    Engine/Entity/simEntityOption.h \
+    Engine/Entity/Sensor/simCamera.h \
+    Engine/Entity/Robot/simRobot.h \
+    Engine/Entity/Environment/simEnvironment.h \
+    Engine/Entity/Sensor/simSensor.h \
+    Engine/Entity/Environment/simPlane.h
 
 FORMS    += mainwindow.ui
