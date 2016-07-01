@@ -6,6 +6,7 @@ QIrrlichtWidget::QIrrlichtWidget(QWidget *parent) :
 {
     device = 0;
     renderWidget= parent;
+    engine = new SimEngine();
 }
 
 QIrrlichtWidget::~QIrrlichtWidget()
@@ -119,5 +120,6 @@ void QIrrlichtWidget::updateIrrlicht( irr::IrrlichtDevice* device )
         device->getVideoDriver()->beginScene(true, true, color);
         device->getSceneManager()->drawAll();
         device->getVideoDriver()->endScene();
+        engine->run();
     }
 }

@@ -52,7 +52,7 @@ public:
      * fetch pointer to entity vector
      * @return pointer to vector of enitty pointers
      */
-    vector<SimEntity*> * getEntityVector(){return &simEntityVector;};
+    vector<SimEntity*> * getEntityVector(){return &simEntityVector;}
 
     /**
      * fetch pointer to entity searched by name

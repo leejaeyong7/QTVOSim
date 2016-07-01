@@ -5,6 +5,7 @@
 #include <QWidget>
 #include <QResizeEvent>
 #include <irrlicht.h>
+#include "Engine/simEngine.h"
 
 using namespace irr;
 using namespace core;
@@ -46,6 +47,8 @@ protected:
     // We keep the camera inside this widget so we can resize the window dynamically
     ICameraSceneNode* camera;
     SIrrlichtCreationParameters params;
+
+    SimEngine * engine;
 };
 
 #endif // QIRRWIDGET_H

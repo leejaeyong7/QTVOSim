@@ -24,7 +24,7 @@
      </rect>
     </property>
    </widget>
-   <widget class="QWidget" name="">
+   <widget class="QWidget" name="layoutWidget">
     <property name="geometry">
      <rect>
       <x>620</x>
@@ -135,7 +135,7 @@
           <attribute name="title">
            <string>Free</string>
           </attribute>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
              <x>1</x>
@@ -364,7 +364,7 @@
           <attribute name="title">
            <string>Edit</string>
           </attribute>
-          <widget class="QWidget" name="">
+          <widget class="QWidget" name="layoutWidget">
            <property name="geometry">
             <rect>
              <x>0</x>
@@ -565,7 +565,7 @@
      <x>0</x>
      <y>0</y>
      <width>1150</width>
-     <height>32</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuEngine">
@@ -583,7 +583,7 @@
     </property>
     <widget class="QMenu" name="menuAdd">
      <property name="title">
-      <string>Add</string>
+      <string>&amp;Add</string>
      </property>
      <addaction name="actionAddRobot"/>
      <addaction name="actionAddSensor"/>
@@ -591,7 +591,7 @@
     </widget>
     <widget class="QMenu" name="menuEdit">
      <property name="title">
-      <string>Edit</string>
+      <string>&amp;Edit</string>
      </property>
      <addaction name="actionEditRobot"/>
      <addaction name="actionEditSensor"/>
@@ -625,27 +625,27 @@
     <bool>true</bool>
    </property>
    <property name="text">
-    <string>Show Features</string>
+    <string>&amp;Show Features</string>
    </property>
   </action>
   <action name="actionExit">
    <property name="text">
-    <string>Exit</string>
+    <string>E&amp;xit</string>
    </property>
   </action>
   <action name="actionAttach">
    <property name="text">
-    <string>Attach</string>
+    <string>Atta&amp;ch</string>
    </property>
   </action>
   <action name="actionDetach">
    <property name="text">
-    <string>Detach</string>
+    <string>&amp;Detach</string>
    </property>
   </action>
   <action name="actionEditPath">
    <property name="text">
-    <string>Edit</string>
+    <string>&amp;Edit</string>
    </property>
    <property name="toolTip">
     <string>Edits path in scene</string>
@@ -653,7 +653,7 @@
   </action>
   <action name="actionAddRobot">
    <property name="text">
-    <string>Robot</string>
+    <string>&amp;Robot</string>
    </property>
    <property name="toolTip">
     <string>Adds Robot to Scene</string>
@@ -661,7 +661,7 @@
   </action>
   <action name="actionAddSensor">
    <property name="text">
-    <string>Sensor</string>
+    <string>&amp;Sensor</string>
    </property>
    <property name="toolTip">
     <string>Adds Sensor to Scene</string>
@@ -669,7 +669,7 @@
   </action>
   <action name="actionAddEnvironment">
    <property name="text">
-    <string>Environment</string>
+    <string>&amp;Environment</string>
    </property>
    <property name="toolTip">
     <string>Adds Environment To Scene</string>
@@ -677,7 +677,7 @@
   </action>
   <action name="actionEditRobot">
    <property name="text">
-    <string>Robot</string>
+    <string>&amp;Robot</string>
    </property>
    <property name="toolTip">
     <string>Edits existing Robot in scene</string>
@@ -685,7 +685,7 @@
   </action>
   <action name="actionEditSensor">
    <property name="text">
-    <string>Sensor</string>
+    <string>&amp;Sensor</string>
    </property>
    <property name="toolTip">
     <string>Edits existing sensor in scene</string>
@@ -693,7 +693,7 @@
   </action>
   <action name="actionEditEnvironment">
    <property name="text">
-    <string>Environment</string>
+    <string>&amp;Environment</string>
    </property>
    <property name="toolTip">
     <string>Edits existing environment in scene</string>
@@ -701,17 +701,17 @@
   </action>
   <action name="actionImport">
    <property name="text">
-    <string>Import</string>
+    <string>&amp;Import</string>
    </property>
   </action>
   <action name="actionExport">
    <property name="text">
-    <string>Export</string>
+    <string>&amp;Export</string>
    </property>
   </action>
   <action name="actionRun">
    <property name="text">
-    <string>Run</string>
+    <string>&amp;Run</string>
    </property>
   </action>
  </widget>
