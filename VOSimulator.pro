@@ -19,7 +19,15 @@ SOURCES += main.cpp\
     glwidget.cpp \
     Engine/Entity/Physics/simPhysics.cpp \
     Engine/Entity/Sensor/simSensor.cpp \
-    Engine/Entity/Model/simModel.cpp
+    Engine/Entity/Model/simModel.cpp \
+    Engine/Entity/Sensor/simCamera.cpp \
+    Engine/Entity/Math/simMath.cpp \
+    Engine/Entity/Environment/simenvironment.cpp \
+    entityCreateWindow.cpp \
+    Engine/Entity/Environment/simGround.cpp \
+    Engine/Entity/Environment/simPlane.cpp \
+    entityEditWindow.cpp \
+    pathEditWindow.cpp
 
 HEADERS  += mainwindow.h \
     Engine/simEngine.h \
@@ -29,6 +37,19 @@ HEADERS  += mainwindow.h \
     glwidget.h \
     Engine/Entity/Physics/simPhysics.h \
     Engine/Entity/Sensor/simSensor.h \
-    Engine/Entity/Model/simModel.h
+    Engine/Entity/Model/simModel.h \
+    Engine/Entity/simPrototype.h \
+    Engine/Entity/Sensor/simCamera.h \
+    Engine/simEntityList.h \
+    Engine/Entity/Math/simMath.h \
+    Engine/Entity/Environment/simenvironment.h \
+    entityCreateWindow.h \
+    Engine/Entity/Environment/simGround.h \
+    Engine/Entity/Environment/simPlane.h \
+    entityEditWindow.h \
+    pathEditWindow.h
 
-FORMS    += mainwindow.ui
+FORMS    += mainwindow.ui \
+    entityCreateWindow.ui \
+    entityEditWindow.ui \
+    pathEditWindow.ui

@@ -31,7 +31,6 @@ SimRobot::SimRobot(string _name,
                    double a, double b, double c, SimEntity* parent)
     :SimEntity(_name,x,y,z,a,b,c,parent)
 {
-
 }
 
 /**
@@ -46,6 +45,52 @@ SimRobot::~SimRobot()
         (*it)->setParent(0);
     }
 }
+
+void SimRobot::update()
+{
+    SimEntity::update();
+    getModel()->clear();
+    //up
+    //top left
+    Point3D p1 = {{-0.5,-0.5,0.5}};
+    //top right
+    Point3D p2 = {{0.5,-0.5,0.5}};
+    //bot right /front
+    Point3D p3 = {{0.5,0.5,0.5}};
+    // bot left /front
+    Point3D p4 = {{-0.5,0.5,0.5}};
+    // down
+    //top left
+    Point3D p5 = {{-0.5,-0.5,0}};
+    //top right
+    Point3D p6 = {{0.5,-0.5,0}};
+    //bot right /front
+    Point3D p7 = {{0.5,0.5,0}};
+    // bot left /front
+    Point3D p8 = {{-0.5,0.5,0}};
+
+    // ul ur dr rl
+    //up
+    Rectangle r1 = {{p1,p2,p3,p4}};
+    //front
+    Rectangle r2 = {{p4,p3,p7,p8}};
+    //left
+    Rectangle r3 = {{p1,p4,p8,p5}};
+    //right
+    Rectangle r4 = {{p3,p2,p6,p7}};
+    //back
+    Rectangle r5 = {{p2,p1,p5,p6}};
+    //down
+    Rectangle r6 = {{p8,p7,p6,p5}};
+
+    getModel()->addRectangle(r1);
+    getModel()->addRectangle(r2);
+    getModel()->addRectangle(r3);
+    getModel()->addRectangle(r4);
+    getModel()->addRectangle(r5);
+    getModel()->addRectangle(r6);
+}
+
 /**
  * Adds Sensor to robot
  * @param SimSensor* - pointer to sensor object to add

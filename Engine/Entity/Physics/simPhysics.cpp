@@ -12,54 +12,6 @@
 //                                END INCLUDES                                //
 //----------------------------------------------------------------------------//
 //----------------------------------------------------------------------------//
-//                        HELPER FUNCTION DEFINITIONS                         //
-//----------------------------------------------------------------------------//
-namespace JAE_MATH_FUNCTIONS{
-double add(double a, double b)
-{
-    return a+b;
-}
-
-double multiply(double a, double b)
-{
-    return a*b;
-}
-
-double over(double a, double b)
-{
-    return (a>b) ? a : b-a;
-}
-
-double less(double a, double b)
-{
-    return (a < b) ? a : a - b;
-}
-
-double toDeg(double rad)
-{
-    return rad * 180.0 / PI;
-}
-
-double toRad(double deg)
-{
-    return deg * PI / 180.0;
-}
-
-double fitDeg(double deg)
-{
-    return less(over(deg,0),360);
-}
-
-double fitRad(double rad)
-{
-    return less(over(rad,0),2*PI);
-}
-}
-using namespace JAE_MATH_FUNCTIONS;
-//----------------------------------------------------------------------------//
-//                      END HELPER FUNCTION DEFINITIONS                       //
-//----------------------------------------------------------------------------//
-//----------------------------------------------------------------------------//
 //                              CLASS DEFINITION                              //
 //----------------------------------------------------------------------------//
 /**
@@ -132,11 +84,20 @@ void SimPhysics::update()
     time_end = (double)(value.count());
     double ms = (time_end - time_start);
     time_start = time_end;
-    position = tensor(add,position,map(multiply,velocity,ms));
-    velocity = tensor(add,velocity,map(multiply,acceleration,ms));
-    rotation = apply(fitDeg,(tensor(add,rotation,map(multiply,velocity,ms))));
-    angVelocity = apply(fitDeg,
-                        (tensor(add,velocity,map(multiply,acceleration,ms))));
+    position = tensor<3>(add,
+                         position,
+                         map<3>(multiply,velocity,ms));
+    velocity = tensor<3>(add,
+                         velocity,
+                         map<3>(multiply,acceleration,ms));
+    rotation = apply<3>(fitDeg,
+                        (tensor<3>(add,
+                                   rotation,
+                                   map<3>(multiply,velocity,ms))));
+    angVelocity = apply<3>(fitDeg,
+                           (tensor<3>(add,
+                                      velocity,
+                                      map<3>(multiply,acceleration,ms))));
 }
 
 /**
@@ -230,58 +191,6 @@ void SimPhysics::setAngAcceleration(double a, double b, double c)
 void SimPhysics::setAngAcceleration(array<double,3> p)
 {
     angAcceleration = p;
-}
-
-//----------------------------------------------------------------------------//
-//                        PRIVATE FUNCTION DEFINITION                         //
-//----------------------------------------------------------------------------//
-/**
- * @brief SimPhysics::map
- * @param orig original point
- * @param param parameter to be used
- * @param func funtion to apply that takes two variables
- * @return array with map operation of func
- */
-array<double,3> SimPhysics::map(fun_2 func,array<double,3> orig, double param)
-{
-    array<double,3> ret;
-    ret[0] = func(orig[0],param);
-    ret[1] = func(orig[1],param);
-    ret[2] = func(orig[2],param);
-    return ret;
-}
-
-/**
- * @brief SimPhysics::apply
- * @param p1 point1
- * @param func function that takes one variables
- * @return array with func applied to each element
- */
-array<double,3> SimPhysics::apply(fun_1 func,array<double,3> orig)
-{
-    array<double,3> ret;
-    ret[0] = func(orig[0]);
-    ret[1] = func(orig[1]);
-    ret[2] = func(orig[2]);
-    return ret;
-}
-
-/**
- * @brief SimPhysics::tensor
- * @param p1 point1
- * @param p2 point 2
- * @param func function that takes two variables
- * @return array with tensor operation of func
- */
-array<double,3> SimPhysics::tensor(fun_2 func,
-                                   array<double,3> p1,
-                                   array<double,3> p2)
-{
-    array<double,3> ret;
-    ret[0] = func(p1[0],p2[0]);
-    ret[1] = func(p1[1],p2[1]);
-    ret[2] = func(p1[2],p2[2]);
-    return ret;
 }
 //----------------------------------------------------------------------------//
 //                            END CLASS DEFINITION                            //

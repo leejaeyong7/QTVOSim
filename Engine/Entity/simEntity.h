@@ -10,6 +10,7 @@
 //                                  INCLUDES                                  //
 //----------------------------------------------------------------------------//
 #include <string>
+#include <iostream>
 #include <vector>
 #include "Physics/simPhysics.h"
 #include "Model/simModel.h"
@@ -21,12 +22,14 @@
 //                                 NAMESPACES                                 //
 //----------------------------------------------------------------------------//
 using namespace std;
+using namespace JAE_MATH_FUNCTIONS;
 //----------------------------------------------------------------------------//
 //                               END NAMESPACES                               //
 //----------------------------------------------------------------------------//
 //----------------------------------------------------------------------------//
 //                              CLASS DEFINITION                              //
 //----------------------------------------------------------------------------//
+class SimModel;
 class SimEntity
 {
 //----------------------------------------------------------------------------//
@@ -46,16 +49,22 @@ public:
     SimEntity& operator= (const SimEntity & rhs);
 
     /* default desructor */
-    ~SimEntity();
+    virtual ~SimEntity();
 
     /* updates entity */
-    void update();
+    virtual void update();
+
+    /* draws entity */
+    void draw(DSMat<4> ViewMatrix);
 
 //----------------------------------------------------------------------------//
 //                                  SETTERS                                   //
 //----------------------------------------------------------------------------//
     /* sets parent entity (used for Forward Kinematics) */
     void setParent(SimEntity* parent);
+
+    /* copies model drawing functions */
+    void setModel(SimModel * proto);
 
     /* Sets position of entity relative to parent (if exists) */
     void setPosition(double x, double y, double z);
@@ -70,7 +79,16 @@ public:
     void setRotation(array<double,3> p);
 
     /* Sets name of entity */
-    void setName(std::string new_name);
+    void setName(string new_name);
+
+    /* adds option to advanced options */
+    void setOption(int index, int option);
+    void setOption(int index,double option);
+    void setOption(int index,string option);
+
+    void addOption(string label, int option);
+    void addOption(string label, double option);
+    void addOption(string label, string option);
 //----------------------------------------------------------------------------//
 //                                  GETTERS                                   //
 //----------------------------------------------------------------------------//
@@ -86,21 +104,45 @@ public:
     /* Gets position of entity relative to parent */
     const Point3D getPosition() const {return physics->getPosition();}
 
-    /* Get relative position to parent */
-    const Point3D getAbsolutePosition() const;
-
     /* Gets Rotation of entity */
     const array<double,3> getRotation() const {return physics->getRotation();}
+
+    /* gets transformation */
+    DSMat<4> getTransformation();
+
+    /* Get relative position to parent */
+    DSMat<4> getAbsoluteTransformation();
+
+    /* gets transformation */
+    DSMat<4> getInverseTransformation();
+
+    /* Gets translation matrix from position */
+    DSMat<4> getTranslationMatrix();
+
+    /* Gets Rotation matrix from position */
+    DSMat<4> getRotationMatrix();
 
     /* gets name of this entity */
     const std::string getName() const {return name;}
 
-    /* gets advanced option pointer */
+    /* get advanced option vector */
     const vector<AdvancedOption*>* getAdvancedOption() const
         {
             return &advancedOption;
         }
+    /* Gets option value at index */
+    int getOptionAsInt(int index);
+    double getOptionAsDouble(int index);
+    string getOptionAsString(int index);
 
+    /* gets label of advanced option */
+    string getOptionLabel(int index);
+
+    /* get length of advanced option */
+    int getOptionLength();
+
+    /* gets type of advanced option */
+    OptionType getOptionType(int index);
 
 //----------------------------------------------------------------------------//
 //                      END PUBLIC FUNCTION DECLARATIONS                      //
@@ -121,7 +163,7 @@ private:
     // name of entity
     std::string name;
 
-    // Advanced options vector
+    /* advanced option vector */
     vector<AdvancedOption*> advancedOption;
 
     // check advanced option label

@@ -14,7 +14,8 @@
 #include <array>
 #include <cmath>
 #include <chrono>
-#define PI 3.1415926535
+#include "../simPrototype.h"
+#include "../Math/simMath.h"
 //----------------------------------------------------------------------------//
 //                                END INCLUDES                                //
 //----------------------------------------------------------------------------//
@@ -23,26 +24,9 @@
 //----------------------------------------------------------------------------//
 using namespace std;
 using namespace std::chrono;
+using namespace JAE_MATH_FUNCTIONS;
 //----------------------------------------------------------------------------//
 //                               END NAMESPACES                               //
-//----------------------------------------------------------------------------//
-//----------------------------------------------------------------------------//
-//                            TYPEDEF DEFINITIONS                             //
-//----------------------------------------------------------------------------//
-typedef array<double,3> Point3D;
-typedef array<double,2> Point2D;
-typedef array<Point3D,2> Line;
-typedef array<Point3D,3> Triangle;
-typedef array<Point3D,4> Rectangle;
-typedef struct Sphere
-{
-    Point3D center;
-    double radius;
-}Sphere;
-typedef double (*fun_1)(double a);
-typedef double (*fun_2)(double a,double b);
-//----------------------------------------------------------------------------//
-//                          END TYPEDEF DEFINITIONS                           //
 //----------------------------------------------------------------------------//
 //----------------------------------------------------------------------------//
 //                              CLASS DEFINITION                              //
@@ -134,32 +118,23 @@ public:
 //                       PRIVATE VARIABLE DECLARATIONS                        //
 //----------------------------------------------------------------------------//
 private:
-    // maps points
-    array<double,3> map(fun_2 func,array<double,3> orig, double param);
-
-    // apply points
-    array<double,3> apply(fun_1 func,array<double,3> orig);
-
-    // tensor points
-    array<double,3> tensor(fun_2 func,array<double,3> p1, array<double,3> p2);
-
     // translation coordinates
-    Point3D position;
+    Point3D position = {{0}};
 
     // velocity of entity
-    array<double,3> velocity;
+    array<double,3> velocity = {{0}};
 
     // acceleration of entity
-    array<double,3> acceleration;
+    array<double,3> acceleration = {{0}};
 
     // rotation coordinates
-    array<double,3> rotation;
+    array<double,3> rotation = {{0}};
 
     // angular velocity
-    array<double,3> angVelocity;
+    array<double,3> angVelocity = {{0}};
 
     // angular acceleration
-    array<double,3> angAcceleration;
+    array<double,3> angAcceleration = {{0}};
 
     // time parameter
     double time_start;

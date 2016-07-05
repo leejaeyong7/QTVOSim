@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <string>
 #include "Entity/simEntity.h"
+#include "simEntityList.h"
 //----------------------------------------------------------------------------//
 //                                END INCLUDES                                //
 //----------------------------------------------------------------------------//
@@ -31,54 +32,50 @@ class SimEngine
 {
 public:
 
-    /**
-     * Constructor
-     * Initialize Irrlicht, Entities, and physics
-     * @param bool - if true, setup GUI
-     */
-    SimEngine();
+    /* Default Constructor */
+    SimEngine(pointDraw pointDrawFunc = 0,
+              lineDraw lineDrawFunc = 0,
+              triangleDraw triangleDrawFunc = 0,
+              rectangleDraw rectangleDrawFunc = 0,
+              sphereDraw sphereDrawFunc = 0);
 
-    /**
-     * @brief updates engine
-     */
+    /* default destructor */
+    ~SimEngine();
+
+    /* updates engine */
     void update();
 
-    /**
-     * Runs Simulation with physics, environment, and 3D rendering
-     */
+    /* draws all entities */
+    void draw();
+
+    /* Runs Simulation with physics, environment, and 3D rendering */
     void run();
 
-    /**
-     * fetch pointer to entity vector
-     * @return pointer to vector of enitty pointers
-     */
+    /* sets default camera */
+    void setCamera(SimCamera * cam);
+
+    /* gets MainCamera */
+    SimCamera* getCamera();
+
+    /* fetch pointer to entity vector */
     vector<SimEntity*> * getEntityVector(){return &simEntityVector;}
 
-    /**
-     * fetch pointer to entity searched by name
-     * @param string - name
-     * @return SimEntity * - pointer to entity object
-     */
+    /* fetch pointer to entity searched by name */
     SimEntity* getEntityByName(std::string name);
 
-    /**
-     * adds entity to rendering
-     * @param EntityType - type of entity object to add
-     * @param SimEntity - entity object to add
-     * @see SimEntity
-     * @return None
-     */
+    /* adds entity to rendering */
     void addEntity(SimEntity * obj);
 
-    /**
-     * removes entity object from rendering
-     * if entity object doesn't exist, it will do nothing
-     * @param SimEntity - pointer to entity object to remove
-     * @return None
-     */
+    /* removes entity object from rendering */
     void removeEntity(SimEntity * obj);
 
 private:
+    // main camera ptr
+    SimCamera * mainCamera;
+    // default model for all objects
+    SimModel * defaultModel;
+    SimModel * getDefaultModel(){return defaultModel;}
+
     // vector of SimEntity object
     vector<SimEntity*> simEntityVector;
 

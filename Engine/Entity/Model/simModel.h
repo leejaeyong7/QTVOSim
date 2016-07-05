@@ -10,12 +10,26 @@
 //                                  INCLUDES                                  //
 //----------------------------------------------------------------------------//
 #include <vector>
+#include "../simEntity.h"
+#include "../simPrototype.h"
 //----------------------------------------------------------------------------//
 //                                END INCLUDES                                //
 //----------------------------------------------------------------------------//
 //----------------------------------------------------------------------------//
+//                            TYPEDEF DEFINITIONS                             //
+//----------------------------------------------------------------------------//
+typedef void (*pointDraw)(Point3D);
+typedef void (*lineDraw)(Line);
+typedef void (*triangleDraw)(Triangle);
+typedef void (*rectangleDraw)(Rectangle);
+typedef void (*sphereDraw)(Sphere);
+//----------------------------------------------------------------------------//
+//                          END TYPEDEF DEFINITIONS                           //
+//----------------------------------------------------------------------------//
+//----------------------------------------------------------------------------//
 //                             CLASS DECLARATION                              //
 //----------------------------------------------------------------------------//
+class SimEntity;
 class SimModel
 {
 public:
@@ -50,7 +64,7 @@ public:
     void addPoint(Point3D p);
 
     /* add lines */
-    void addLIne(Line l);
+    void addLine(Line l);
 
     /* adds triangle to entity */
     void addTriangle(Triangle t);
@@ -62,8 +76,40 @@ public:
     void addSphere(Sphere s);
 
     /* draw all forms */
-    void draw();
+    void draw(DSMat<4> ModelMatrix);
 
+    /* sets function that draws point */
+    void setPointDraw(pointDraw func);
+
+    /* sets function that draws line */
+    void setLineDraw(lineDraw func);
+
+    /* sets function that draws triangle */
+    void setTriangleDraw(triangleDraw func);
+
+    /* sets function that draws rectangle */
+    void setRectangleDraw(rectangleDraw func);
+
+    /* sets function that draws sphere */
+    void setSphereDraw(sphereDraw func);
+
+    /* gets function that draws point */
+    pointDraw getPointDraw(){return pointDrawFunc;}
+
+    /* gets function that draws line */
+    lineDraw getLineDraw(){return lineDrawFunc;}
+
+    /* gets function that draws triangle */
+    triangleDraw getTriangleDraw(){return triangleDrawFunc;}
+
+    /* gets function that draws rectangle */
+    rectangleDraw getRectangleDraw(){return rectangleDrawFunc;}
+
+    /* gets function that draws sphere */
+    sphereDraw getSphereDraw(){return sphereDrawFunc;}
+
+    /* clears all */
+    void clear();
 private:
     /* clears point vector */
     void clearPoints();
@@ -81,19 +127,34 @@ private:
     void clearSpheres();
 
     /* draws a point */
-    void drawPoint();
+    void drawPoint(DSMat<4> Transformation);
 
     /* draws a line */
-    void drawLine();
+    void drawLine(DSMat<4> Transformation);
 
     /* draws a triangle */
-    void drawTriangle();
+    void drawTriangle(DSMat<4> Transformation);
 
     /* draws rectangle */
-    void drawRectangle();
+    void drawRectangle(DSMat<4> Transformation);
     
     /* draws a sphere */
-    void drawSphere();
+    void drawSphere(DSMat<4> Transformation);
+
+    /* function that takes point to draw point */
+    pointDraw pointDrawFunc;
+
+    /* function that takes line to draw line */
+    lineDraw lineDrawFunc;
+
+    /* function that takes triangle to draw triangle */
+    triangleDraw triangleDrawFunc;
+
+    /* function that takes rectangle to draw rectangle */
+    rectangleDraw rectangleDrawFunc;
+
+    /* function that takes sphere to draw sphere */
+    sphereDraw sphereDrawFunc;
 
     // Vector of Points for each entities
     vector<Point3D> points;

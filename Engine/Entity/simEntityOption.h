@@ -29,10 +29,13 @@ typedef enum optionType{
 //----------------------------------------------------------------------------//
 class AdvancedOption{
 public:
-    AdvancedOption(std::string _label, OptionType _type){
+    AdvancedOption(std::string _label){
         label = _label;
-        type = _type;
-    };
+    }
+    void setType(OptionType type){
+        this->type = type;
+    }
+
     std::string label;
     OptionType type;
 };
@@ -40,8 +43,9 @@ public:
 
 class AdvancedOption_Int: public AdvancedOption{
 public:
-    AdvancedOption_Int(std::string _label, OptionType _type,int _value):
-        AdvancedOption(_label,_type){
+    AdvancedOption_Int(std::string _label, int _value):
+        AdvancedOption(_label){
+        setType(INTEGER);
         value = _value;
     }
     int value;
@@ -50,8 +54,9 @@ public:
 
 class AdvancedOption_Double: public AdvancedOption{
 public:
-    AdvancedOption_Double(std::string _label, OptionType _type,double _value):
-        AdvancedOption(_label,_type){
+    AdvancedOption_Double(std::string _label, double _value):
+        AdvancedOption(_label){
+        setType(DOUBLE);
         value = _value;
     }
     double value;
@@ -61,9 +66,9 @@ public:
 class AdvancedOption_String: public AdvancedOption{
 public:
     AdvancedOption_String(
-        std::string _label, OptionType _type,std::string _value
-        ):
-        AdvancedOption(_label,_type){
+        std::string _label,std::string _value):
+        AdvancedOption(_label){
+        setType(STRING);
         value = _value;
     }
     std::string value;

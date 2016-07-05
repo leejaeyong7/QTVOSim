@@ -39,6 +39,8 @@ public:
     /* default destructor */
     ~SimRobot();
 
+    virtual void update();
+
     /* adds sensor to robot */
     void addSensor(SimSensor* obj);
 
